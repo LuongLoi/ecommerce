@@ -1,6 +1,8 @@
 package luongloi.com.ecommerce.domain;
 
-import java.sql.Date;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -24,19 +27,29 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min = 2, message = "Password phải có tối thiểu 2 ký tự")
+    @Size(min = 3, message = "Password phải có tối thiểu 3 ký tự")
     private String password;
 
     @NotNull
     @Size(min = 3, message = "Fullname phải có tối thiểu 3 ký tự")
     private String fullName;
  
+    @NotNull(message = "Date of birth is required")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message="Ngày, tháng, năm sinh không thể vượt quá ngày hiện tại!")
     private Date birthDay;
     
+    @Size(min=1,message="Chọn Tỉnh/Thành phố")
     private String city;
+
+    @Size(min=1, message = "Chọn Quận/Huyện")
     private String district;
+
+    @Size(min=1, message = "Chọn Xã/Phường")
     private String ward;
     private String address;
+    @NotNull
+    @Size(min=10, max = 10, message = "Số điện thoại không hợp lệ!")
     private String phone;
     private String avatar;
     private String gender;
